@@ -81,7 +81,7 @@ class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic
 		let content = contentTextField.text
 
 		if content != "" {
-			let request = CreateTodo.CreateTodo.Request(todoField: CreateTodo.TodoField(content: content!))
+            let request = CreateTodo.CreateTodo.Request( todoField: CreateTodo.TodoField(content: content!))
 			interactor?.createTodo(request: request)
 		} else {
 			showTodoFailureAlert(title: "투두 등록 실패", message: "내용을 입력해주세요.")

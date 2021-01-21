@@ -44,14 +44,10 @@ class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 
 
 	func checkTodo(request: TodoList.CheckTodo.Request)
-	{
+    {
+        todosWorker.checkTodo(todoIdToCheck: request.id, todoRowToCheck: request.row) { (row, todo) -> Void in
 
-		print("interactor check")
-
-
-		todosWorker.checkTodo(todoIdToCheck: request.id) { (id, todo) -> Void in
-
-			let response = TodoList.CheckTodo.Response(id: id, todo: todo!)
+			let response = TodoList.CheckTodo.Response(row: row, todo: todo!)
 			self.presenter?.updateTodo(response: response)
 		}
 	}

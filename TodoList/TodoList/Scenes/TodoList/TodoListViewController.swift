@@ -77,10 +77,16 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 
 		fetchTodos()
 	}
-
+    
 	// MARK: - Fetch todos
 
-	var displayedTodos: [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []
+    var displayedTodos: [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []{
+        didSet{
+            print("display \(displayedTodos)")
+            self.todoTableView.reloadData()
+            
+        }
+    }
 
 	func fetchTodos()
 	{
@@ -90,13 +96,13 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 
 	func displayTodoList(viewModel: TodoList.FetchTodos.ViewModel)
 	{
+        self.router?.dataStore = interactor as! TodoListDataStore
 		displayedTodos = viewModel.displayedTodos
-		refreshTableView()
 	}
 
 	func displayUpdatedTodoList(viewModel: TodoList.CheckTodo.ViewModel)
 	{
-		displayedTodos[viewModel.index].isDone = viewModel.isDone
+        displayedTodos[viewModel.row].isDone = viewModel.todo.isDone
 		refreshTableView()
 	}
 
@@ -136,8 +142,9 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 
 		self.displayedTodos[sender.tag].isDone = !self.displayedTodos[sender.tag].isDone
 
-		let request = TodoList.CheckTodo.Request(id: self.displayedTodos[sender.tag].id)
+        let request = TodoList.CheckTodo.Request(id: self.displayedTodos[sender.tag].id, row: sender.tag)
 
 		interactor?.checkTodo(request: request)
+        refreshTableView()
 	}
 }

@@ -41,7 +41,6 @@ class CreateTodoRouter: NSObject, CreateTodoRoutingLogic, CreateTodoDataPassing
 			let destinationVC = storyboard.instantiateViewController(withIdentifier: "TodoListViewController") as! TodoListViewController
 			var destinationDS = destinationVC.router!.dataStore!
 			passDataToTodoList(source: dataStore!, destination: &destinationDS)
-			destinationVC.refreshTableView()
 			navigateToTodoList(source: viewController!, destination: destinationVC)
 		}
 	}
@@ -57,8 +56,8 @@ class CreateTodoRouter: NSObject, CreateTodoRoutingLogic, CreateTodoDataPassing
 
 	func passDataToTodoList(source: CreateTodoDataStore, destination: inout TodoListDataStore)
 	{
-		if source.todo != nil {
-			destination.todos?.append(source.todo!)
+        if source.todo != nil && destination.todos != nil {
+            destination.todos!.append(source.todo!)
 		}
 	}
 }

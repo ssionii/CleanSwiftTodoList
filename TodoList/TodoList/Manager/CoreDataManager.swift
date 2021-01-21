@@ -44,14 +44,30 @@ class CoreDataManager {
 		return todos
 	}
 
-	func saveTodo(id: Int64, content: String,
+	func saveTodo(content: String,
 				  isDone: Bool, creationDate: Date, onSuccess: @escaping ((Bool) -> Void)) {
+        
+        
 		if let context = context,
 		   let entity: NSEntityDescription
 			= NSEntityDescription.entity(forEntityName: modelName, in: context) {
-
+            
+            // id 값 구하기
+            var lastId: Int = 0
+            let fetchRequest: NSFetchRequest<NSManagedObject>
+                = NSFetchRequest<NSManagedObject>(entityName: modelName)
+            do {
+                if let fetchResult: [Todos] = try context.fetch(fetchRequest) as? [Todos] {
+                    lastId = Int(fetchResult[fetchResult.count-1].id)
+                }
+            } catch let error as NSError {
+                print("Could not fetch🥺: \(error), \(error.userInfo)")
+            }
+            
+            
+            
 			if let todo: Todos = NSManagedObject(entity: entity, insertInto: context) as? Todos {
-				todo.id = id
+                todo.id = Int64(lastId + 1)
 				todo.content = content
 				todo.isDone = isDone
 				todo.creationDate = creationDate
@@ -63,7 +79,8 @@ class CoreDataManager {
 		}
 	}
 
-	func checkTodo(id: Int64, onSuccess: @escaping ((Bool) -> Void)) {
+	func checkTodo(id: Int64, onSuccess: @escaping ((Bool) -> Void))
+    {
 
 		let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
 
