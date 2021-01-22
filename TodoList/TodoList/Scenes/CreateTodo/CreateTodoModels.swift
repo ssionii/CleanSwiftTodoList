@@ -16,6 +16,7 @@ enum CreateTodo
 {
 	struct TodoField
 	{
+		var title: String
 		var content: String
 	}
 

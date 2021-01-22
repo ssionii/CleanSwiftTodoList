@@ -16,12 +16,12 @@ protocol TodoListPresentationLogic
 {
 	func presentTodos(response: TodoList.FetchTodos.Response)
 	func updateTodo(response: TodoList.CheckTodo.Response)
-
+	func presentTodayDate(response: TodoList.FetchTodayDate.Response)
 }
 
 class TodoListPresenter: TodoListPresentationLogic
 {
-  	weak var viewController: TodoListDisplayLogic?
+	weak var viewController: TodoListDisplayLogic?
 
 	let dateFormatter : DateFormatter = {
 
@@ -31,29 +31,45 @@ class TodoListPresenter: TodoListPresentationLogic
 		return dateFormatter
 	}()
 
-  // MARK: - Fetch todos
-  
-  func presentTodos(response: TodoList.FetchTodos.Response)
-  {
-	print("presenter presentTodo")
-	var displayedTodos : [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []
+	let todayDateFormatter : DateFormatter = {
 
-	for todo in response.todos {
-		let date = dateFormatter.string(from: todo.creationDate)
-        let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: todo.id ,content: todo.content, isDone: todo.isDone, creationDate: date)
-		displayedTodos.append(displayedTodo)
+		let dateFormatter = DateFormatter()
+		dateFormatter.locale = Locale(identifier: "ko_KR")
+		dateFormatter.dateFormat = "M월 d일"
+		return dateFormatter
+	}()
+
+	// MARK: - Fetch todos
+
+	func presentTodos(response: TodoList.FetchTodos.Response)
+	{
+		var displayedTodos : [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []
+
+		for todo in response.todos {
+			let date = dateFormatter.string(from: todo.creationDate!)
+
+			let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: Int(todo.id), title: todo.title ?? "제목이 없습니다.", isDone: todo.isDone, creationDate: date)
+
+			displayedTodos.append(displayedTodo)
+		}
+
+		let viewModel = TodoList.FetchTodos.ViewModel(displayedTodos: displayedTodos)
+		viewController?.displayTodoList(viewModel: viewModel)
 	}
-
-	print("presenter presentTodo!! \(displayedTodos)")
-
-	let viewModel = TodoList.FetchTodos.ViewModel(displayedTodos: displayedTodos)
-    viewController?.displayTodoList(viewModel: viewModel)
-  }
 
 	func updateTodo(response: TodoList.CheckTodo.Response)
 	{
 		let viewModel = TodoList.CheckTodo.ViewModel(row: response.row, todo: response.todo)
 		viewController?.displayUpdatedTodoList(viewModel: viewModel)
+	}
+
+
+	func presentTodayDate(response: TodoList.FetchTodayDate.Response)
+	{
+		let displayedDate = todayDateFormatter.string(from: response.date)
+
+		let viewModel = TodoList.FetchTodayDate.ViewModel(todayString: displayedDate)
+		viewController?.displayTodayDate(viewModel: viewModel)
 	}
 
 }

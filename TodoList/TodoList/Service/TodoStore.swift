@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import CoreData
 
 class TodoStore: TodosStoreProtocol {
-
-
 //	// MARK: - CRUD operations - Optional error
 //
 //	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void) {
@@ -57,14 +56,17 @@ class TodoStore: TodosStoreProtocol {
 		completionHandler { return todos }
 	}
 
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping (() throws -> Todo?) -> Void) {
+	func createTodo(title: String, content: String , completionHandler: @escaping (() throws -> Todo?) -> Void) {
 
-		let todo = todoToCreate
-        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
+		var todoResult: Todo = Todo()
+		CoreDataManager.shared.saveTodo(title: title, content: content, isDone: false, creationDate: Date()){ todo, onSuccess in
+
+			todoResult = todo
+
 			print("saved =\(onSuccess)")
 		}
 
-		completionHandler { return todo }
+		completionHandler { return todoResult }
 	}
     
     func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void) {

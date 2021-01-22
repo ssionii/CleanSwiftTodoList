@@ -74,14 +74,16 @@ class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic
 
 	// MARK: Create todo
 
+	@IBOutlet weak var titleTextField: UITextField!
 	@IBOutlet weak var contentTextField: UITextField!
 
 	@IBAction func saveButtonTapped(_ sender: Any) {
 
+		let title = titleTextField.text
 		let content = contentTextField.text
 
-		if content != "" {
-            let request = CreateTodo.CreateTodo.Request( todoField: CreateTodo.TodoField(content: content!))
+		if title != "" {
+			let request = CreateTodo.CreateTodo.Request( todoField: CreateTodo.TodoField(title: title!, content: content ?? ""))
 			interactor?.createTodo(request: request)
 		} else {
 			showTodoFailureAlert(title: "투두 등록 실패", message: "내용을 입력해주세요.")

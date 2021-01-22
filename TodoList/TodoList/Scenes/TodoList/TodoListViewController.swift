@@ -16,6 +16,7 @@ protocol TodoListDisplayLogic: class
 {
 	func displayTodoList(viewModel: TodoList.FetchTodos.ViewModel)
 	func displayUpdatedTodoList(viewModel: TodoList.CheckTodo.ViewModel)
+	func displayTodayDate(viewModel: TodoList.FetchTodayDate.ViewModel)
 }
 
 class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableViewDelegate, UITableViewDataSource
@@ -75,6 +76,7 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 		todoTableView.delegate = self
 		todoTableView.dataSource = self
 
+		fetchTodayDate()
 		fetchTodos()
 	}
 
@@ -107,6 +109,23 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 		refreshTableView()
 	}
 
+	// MARK: - Fetch today date
+
+	@IBOutlet weak var todayDateLabel: UILabel!
+
+
+	func fetchTodayDate()
+	{
+		let request = TodoList.FetchTodayDate.Request()
+		interactor?.fetchDate(request: request)
+	}
+
+	func displayTodayDate(viewModel: TodoList.FetchTodayDate.ViewModel)
+	{
+		todayDateLabel.text = viewModel.todayString
+	}
+
+
 	// MARK: - Table view data source
 
 	@IBOutlet weak var todoTableView: UITableView!
@@ -125,7 +144,7 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TodoListTableViewCell", for: indexPath) as! TodoListTableViewCell
 
 		let displayedTodo = displayedTodos[indexPath.row]
-		cell.bindData(content: displayedTodo.content, isDone: displayedTodo.isDone)
+		cell.bindData(content: displayedTodo.title, isDone: displayedTodo.isDone)
 
 		cell.checkButton.tag = indexPath.row
 		cell.checkButton.addTarget(self, action: #selector(checkButtonConnected), for: .touchUpInside)

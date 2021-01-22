@@ -14,8 +14,9 @@ import UIKit
 
 protocol TodoListBusinessLogic
 {
-  	func fetchTodos(request: TodoList.FetchTodos.Request)
+	func fetchTodos(request: TodoList.FetchTodos.Request)
 	func checkTodo(request: TodoList.CheckTodo.Request)
+	func fetchDate(request: TodoList.FetchTodayDate.Request)
 }
 
 protocol TodoListDataStore
@@ -26,16 +27,16 @@ protocol TodoListDataStore
 class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 {
 
-  	var presenter: TodoListPresentationLogic?
-  	var todosWorker = TodosWorker(todosStore: TodoStore())
+	var presenter: TodoListPresentationLogic?
+	var todosWorker = TodosWorker(todosStore: TodoStore())
+	var dateWorker = DateWorker(dateStore: DateStore())
 
 	var todos: [Todo]?
-  
-  	// MARK: Do something
 
-  	func fetchTodos(request: TodoList.FetchTodos.Request)
-  	{
-		print("interactor fetch")
+	// MARK: - Use cases
+
+	func fetchTodos(request: TodoList.FetchTodos.Request)
+	{
 		todosWorker.fetchTodos { (todos) -> Void in
 			self.todos = todos
 			let response = TodoList.FetchTodos.Response(todos: todos)
@@ -45,11 +46,20 @@ class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 
 
 	func checkTodo(request: TodoList.CheckTodo.Request)
-    {
-        todosWorker.checkTodo(todoIdToCheck: request.id, todoRowToCheck: request.row) { (row, todo) -> Void in
+	{
+		todosWorker.checkTodo(todoIdToCheck: request.id, todoRowToCheck: request.row) { (row, todo) -> Void in
 
 			let response = TodoList.CheckTodo.Response(row: row, todo: todo!)
 			self.presenter?.updateTodo(response: response)
+		}
+	}
+
+	func fetchDate(request: TodoList.FetchTodayDate.Request)
+	{
+		dateWorker.fetchDate { (date) -> Void in
+			let response = TodoList.FetchTodayDate.Response(date: date)
+			self.presenter?.presentTodayDate(response: response)
+
 		}
 	}
 }

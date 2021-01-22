@@ -33,9 +33,10 @@ class CreateTodoInteractor: CreateTodoBusinessLogic, CreateTodoDataStore
 
 	func createTodo(request: CreateTodo.CreateTodo.Request) {
 
-        let todoToCreate = Todo(id: 0, content: request.todoField.content, isDone: false, creationDate: Date())
+		let title = request.todoField.title
+		let content = request.todoField.content
 
-		todosWorker.createTodo(todoToCreate: todoToCreate) { (todo: Todo?) in
+		todosWorker.createTodo(title: title, content: content) { (todo: Todo?) in
 			self.todo = todo
 
 			let response = CreateTodo.CreateTodo.Response(todo: todo)

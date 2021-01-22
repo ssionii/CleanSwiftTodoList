@@ -30,7 +30,7 @@
 				struct DisplayedTodo
 				{
                     var id: Int
-					var content: String
+					var title: String
 					var isDone: Bool
 					var creationDate : String
 				}
@@ -57,5 +57,19 @@
 
 			}
 
+		}
+
+		enum FetchTodayDate {
+			struct Request
+			{
+			}
+			struct Response
+			{
+				var date: Date
+			}
+			struct ViewModel
+			{
+				var todayString: String
+			}
 		}
 	}

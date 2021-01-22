@@ -34,9 +34,9 @@ class TodosWorker
 	}
 
 
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?) -> Void)
+	func createTodo(title: String, content: String, completionHandler: @escaping (Todo?) -> Void)
 	{
-		todosStore.createTodo(todoToCreate: todoToCreate) {
+		todosStore.createTodo(title: title, content: content) {
 			(todo: () throws -> Todo?) -> Void in
 			do {
 				let todo = try todo()
@@ -88,7 +88,7 @@ protocol TodosStoreProtocol
 	// MARK: CRUD operations - Inner closure
 
 	func fetchTodos(completionHandler: @escaping (() throws -> [Todo]) -> Void)
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping (() throws -> Todo?) -> Void)
+	func createTodo(title: String, content: String, completionHandler: @escaping (() throws -> Todo?) -> Void)
 	func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void)
 }
 
