@@ -17,7 +17,7 @@ protocol CreateTodoDisplayLogic: class
 	func displayCreateTodo(viewModel: CreateTodo.CreateTodo.ViewModel)
 }
 
-class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic
+class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic, UITextViewDelegate
 {
 
 	var interactor: CreateTodoBusinessLogic?
@@ -70,17 +70,20 @@ class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic
 	override func viewDidLoad()
 	{
 		super.viewDidLoad()
+
+		placeHolderSetting()
 	}
 
-	// MARK: Create todo
+	// MARK: - Create todo
 
 	@IBOutlet weak var titleTextField: UITextField!
-	@IBOutlet weak var contentTextField: UITextField!
+	@IBOutlet weak var contentTextView: UITextView!
+
 
 	@IBAction func saveButtonTapped(_ sender: Any) {
 
 		let title = titleTextField.text
-		let content = contentTextField.text
+		let content = contentTextView.text
 
 		if title != "" {
 			let request = CreateTodo.CreateTodo.Request( todoField: CreateTodo.TodoField(title: title!, content: content ?? ""))
@@ -100,13 +103,39 @@ class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic
 		}
 	}
 
+	// MARK: Make place holder
+
+	func placeHolderSetting() {
+
+		contentTextView.delegate = self
+		contentTextView.text = "내용을 입력해주세요."
+		contentTextView.textColor = UIColor.lightGray
+
+	}
+
+	// TextView Place Holder
+	func textViewDidBeginEditing(_ textView: UITextView) {
+		if textView.textColor == UIColor.lightGray {
+			textView.text = nil
+			textView.textColor = UIColor.black
+		}
+
+	}
+	// TextView Place Holder
+	func textViewDidEndEditing(_ textView: UITextView) {
+		if textView.text.isEmpty {
+			textView.text = "내용을 입력해주세요."
+			textView.textColor = UIColor.lightGray
+		}
+	}
+
 	// MARK: Error handling
 
 	private func showTodoFailureAlert(title: String, message: String)
 	{
-	  let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-	  let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-	  alertController.addAction(alertAction)
-	  showDetailViewController(alertController, sender: nil)
+		let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+		let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+		alertController.addAction(alertAction)
+		showDetailViewController(alertController, sender: nil)
 	}
 }

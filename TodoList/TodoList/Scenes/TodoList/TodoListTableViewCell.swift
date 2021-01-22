@@ -27,7 +27,7 @@ class TodoListTableViewCell : UITableViewCell {
 
 		if isDone {
 			checkButton.setImage(UIImage(systemName: "checkmark.rectangle.fill"), for: .normal)
-            self.contentLabel.textColor = UIColor.gray
+            self.contentLabel.textColor = UIColor.lightGray
 		} else {
 			checkButton.setImage(UIImage(systemName:"rectangle"), for: .normal)
             
