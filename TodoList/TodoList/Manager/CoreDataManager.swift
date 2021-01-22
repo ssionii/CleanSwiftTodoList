@@ -58,7 +58,12 @@ class CoreDataManager {
                 = NSFetchRequest<NSManagedObject>(entityName: modelName)
             do {
                 if let fetchResult: [Todos] = try context.fetch(fetchRequest) as? [Todos] {
-                    lastId = Int(fetchResult[fetchResult.count-1].id)
+
+					if fetchResult.count != 0 {
+						lastId = Int(fetchResult[fetchResult.count-1].id)
+					} else {
+						lastId = 0
+					}
                 }
             } catch let error as NSError {
                 print("Could not fetch🥺: \(error), \(error.userInfo)")

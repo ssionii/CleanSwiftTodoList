@@ -32,9 +32,10 @@ class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 	var todos: [Todo]?
   
   	// MARK: Do something
-  
+
   	func fetchTodos(request: TodoList.FetchTodos.Request)
   	{
+		print("interactor fetch")
 		todosWorker.fetchTodos { (todos) -> Void in
 			self.todos = todos
 			let response = TodoList.FetchTodos.Response(todos: todos)

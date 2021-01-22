@@ -77,14 +77,16 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 
 		fetchTodos()
 	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		fetchTodos()
+	}
     
 	// MARK: - Fetch todos
 
     var displayedTodos: [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []{
         didSet{
-            print("display \(displayedTodos)")
             self.todoTableView.reloadData()
-            
         }
     }
 
@@ -96,7 +98,6 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 
 	func displayTodoList(viewModel: TodoList.FetchTodos.ViewModel)
 	{
-        self.router?.dataStore = interactor as! TodoListDataStore
 		displayedTodos = viewModel.displayedTodos
 	}
 

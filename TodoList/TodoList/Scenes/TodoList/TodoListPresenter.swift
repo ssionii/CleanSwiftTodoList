@@ -35,6 +35,7 @@ class TodoListPresenter: TodoListPresentationLogic
   
   func presentTodos(response: TodoList.FetchTodos.Response)
   {
+	print("presenter presentTodo")
 	var displayedTodos : [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []
 
 	for todo in response.todos {
@@ -42,6 +43,8 @@ class TodoListPresenter: TodoListPresentationLogic
         let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: todo.id ,content: todo.content, isDone: todo.isDone, creationDate: date)
 		displayedTodos.append(displayedTodo)
 	}
+
+	print("presenter presentTodo!! \(displayedTodos)")
 
 	let viewModel = TodoList.FetchTodos.ViewModel(displayedTodos: displayedTodos)
     viewController?.displayTodoList(viewModel: viewModel)

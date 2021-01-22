@@ -10,44 +10,44 @@ import Foundation
 class TodoStore: TodosStoreProtocol {
 
 
-	// MARK: - CRUD operations - Optional error
-
-	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void) {
-
-		let todos = CoreDataManager.shared.getTodos()
-		completionHandler(todos , nil)
-	}
-
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void) {
-
-		let todo = todoToCreate
-        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
-		}
-
-		completionHandler(todo, nil)
-	}
-
-	// MARK: - CRUD operations - Generic enum result type
-
-	func fetchTodos(completionHandler: @escaping TodosStoreFetchTodosCompletionHandler) {
-
-		let todos = CoreDataManager.shared.getTodos()
-		completionHandler(TodosStoreResult.Success(result: todos))
-	}
-
-
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler) {
-
-		let todo = todoToCreate
-        
-        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){
-            onSuccess in
-            print("saved =\(onSuccess)")
-        }
-        
-        completionHandler(TodosStoreResult.Success(result: todo))
-
-	}
+//	// MARK: - CRUD operations - Optional error
+//
+//	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void) {
+//
+//		let todos = CoreDataManager.shared.getTodos()
+//		completionHandler(todos , nil)
+//	}
+//
+//	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void) {
+//
+//		let todo = todoToCreate
+//        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
+//		}
+//
+//		completionHandler(todo, nil)
+//	}
+//
+//	// MARK: - CRUD operations - Generic enum result type
+//
+//	func fetchTodos(completionHandler: @escaping TodosStoreFetchTodosCompletionHandler) {
+//
+//		let todos = CoreDataManager.shared.getTodos()
+//		completionHandler(TodosStoreResult.Success(result: todos))
+//	}
+//
+//
+//	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler) {
+//
+//		let todo = todoToCreate
+//
+//        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){
+//            onSuccess in
+//            print("saved =\(onSuccess)")
+//        }
+//
+//        completionHandler(TodosStoreResult.Success(result: todo))
+//
+//	}
 
 
 	// MARK: - CRUD operations - Inner closure

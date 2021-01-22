@@ -75,15 +75,15 @@ class TodosWorker
 
 protocol TodosStoreProtocol
 {
-	// MARK: CRUD operations - Optional error
-
-	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void)
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void)
-
-	// MARK: CRUD operations - Generic enum result type
-
-	func fetchTodos(completionHandler: @escaping TodosStoreFetchTodosCompletionHandler)
-	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler)
+//	// MARK: CRUD operations - Optional error
+//
+//	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void)
+//	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void)
+//
+//	// MARK: CRUD operations - Generic enum result type
+//
+//	func fetchTodos(completionHandler: @escaping TodosStoreFetchTodosCompletionHandler)
+//	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler)
 
 	// MARK: CRUD operations - Inner closure
 
