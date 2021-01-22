@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 class TodoStore: TodosStoreProtocol {
+
 //	// MARK: - CRUD operations - Optional error
 //
 //	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void) {
@@ -52,9 +53,16 @@ class TodoStore: TodosStoreProtocol {
 	// MARK: - CRUD operations - Inner closure
 
 	func fetchTodos(completionHandler: @escaping (() throws -> [Todo]) -> Void) {
-		let todos = CoreDataManager.shared.getTodos(ascending: true)
+		let todos = CoreDataManager.shared.fetchTodos(ascending: true)
 		completionHandler { return todos }
 	}
+
+	func fetchTodo(id: Int, completionHandler: @escaping (() throws -> Todo?) -> Void) {
+
+		let todo = CoreDataManager.shared.fetchTodo(id: Int64(id))
+		completionHandler { return todo }
+	}
+
 
 	func createTodo(title: String, content: String , completionHandler: @escaping (() throws -> Todo?) -> Void) {
 

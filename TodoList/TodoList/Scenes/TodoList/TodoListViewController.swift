@@ -152,6 +152,11 @@ class TodoListViewController: UIViewController, TodoListDisplayLogic, UITableVie
 		return cell
 	}
 
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		router?.routeToTodoDetail(segue: nil, todoId: displayedTodos[indexPath.row].id)
+
+	}
+
 	func refreshTableView()
 	{
 		self.todoTableView?.reloadData()

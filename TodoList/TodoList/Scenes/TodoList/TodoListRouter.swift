@@ -15,6 +15,7 @@ import UIKit
 @objc protocol TodoListRoutingLogic
 {
 	func routeToCreateTodo(segue: UIStoryboardSegue?)
+	func routeToTodoDetail(segue: UIStoryboardSegue?, todoId: Int)
 }
 
 protocol TodoListDataPassing
@@ -44,12 +45,33 @@ class TodoListRouter: NSObject, TodoListRoutingLogic, TodoListDataPassing
 		}
 	}
 
+	func routeToTodoDetail(segue: UIStoryboardSegue?, todoId: Int)
+	{
+		if let segue = segue {
+			let destinationVC = segue.destination as! TodoDetailViewController
+			var destinationDS = destinationVC.router!.dataStore!
+			passDataToTodoDetail(source: dataStore!, destination: &destinationDS, todoId: todoId)
+		} else {
+			let storyboard = UIStoryboard(name: "Main", bundle: nil)
+			let destinationVC = storyboard.instantiateViewController(withIdentifier: "TodoDetailViewController") as! TodoDetailViewController
+			var destinationDS = destinationVC.router!.dataStore!
+			passDataToTodoDetail(source: dataStore!, destination: &destinationDS, todoId: todoId)
+			navigateToTodoDetail(source: viewController!, destination: destinationVC)
+		}
+	}
+
 	// MARK: Navigation
 
 	func navigateToCreateTodo(source: TodoListViewController, destination: CreateTodoViewController)
 	{
 		source.show(destination, sender: nil)
 	}
+
+	func navigateToTodoDetail(source: TodoListViewController, destination: TodoDetailViewController)
+	{
+		source.show(destination, sender: nil)
+	}
+
 
 	// MARK: Passing data
 
@@ -58,7 +80,8 @@ class TodoListRouter: NSObject, TodoListRoutingLogic, TodoListDataPassing
 		//    destination.name = source.name
 	}
 
-	func setDataStore(){
-
+	func passDataToTodoDetail(source: TodoListDataStore, destination: inout TodoDetailDataStore, todoId: Int)
+	{
+		destination.id = todoId
 	}
 }

@@ -23,7 +23,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TQn-M3-Xlk">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TQn-M3-Xlk">
                                 <rect key="frame" x="0.0" y="142" width="414" height="720"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -120,10 +120,10 @@
             </objects>
             <point key="canvasLocation" x="713.04347826086962" y="118.52678571428571"/>
         </scene>
-        <!--View Controller-->
+        <!--TodoDetailViewController-->
         <scene sceneID="TP7-rF-0ro">
             <objects>
-                <viewController id="fh5-XH-Q8s" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TodoDetailViewController" title="TodoDetailViewController" id="fh5-XH-Q8s" customClass="TodoDetailViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="R0d-FR-sVL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -234,6 +234,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FgE-2q-aEd"/>
+                    <connections>
+                        <outlet property="contentLabel" destination="tgy-fW-znC" id="fCp-Xt-QyF"/>
+                        <outlet property="dateLabel" destination="rab-BG-uXQ" id="iW1-j1-QOq"/>
+                        <outlet property="titleLabel" destination="jNU-fC-NgA" id="R6v-aE-Ehu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9i-e7-Hzs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -16,7 +16,7 @@ class CoreDataManager {
 
 	let modelName: String = "Todo"
 
-	func getTodos(ascending: Bool = false) -> [Todo] {
+	func fetchTodos(ascending: Bool = false) -> [Todo] {
 		var models: [Todo] = [Todo]()
 
 		if let context = context {
@@ -35,6 +35,31 @@ class CoreDataManager {
 		}
 
 		return models
+
+	}
+
+	func fetchTodo(id: Int64) -> Todo? {
+
+		var todo: Todo?
+
+		let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
+
+		do {
+			if let results: [Todo] = try context?.fetch(fetchRequest) as? [Todo] {
+				if results.count != 0 {
+					todo = results[0]
+				}
+			}
+
+		} catch let error as NSError {
+			print("Could not fatch🥺: \(error), \(error.userInfo)")
+		}
+
+		if todo != nil {
+			return todo
+		} else {
+			return nil
+		}
 
 	}
 

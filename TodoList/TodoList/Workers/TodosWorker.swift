@@ -33,6 +33,23 @@ class TodosWorker
 		}
 	}
 
+	func fetchTodo(id: Int, completionHandler: @escaping (Todo?) -> Void)
+	{
+		todosStore.fetchTodo(id: id) { (todo: () throws -> Todo?)
+			-> Void in
+			do {
+				let todo = try todo()
+				DispatchQueue.main.async {
+					completionHandler(todo)
+				}
+			} catch {
+				DispatchQueue.main.async {
+					completionHandler(nil)
+				}
+			}
+		}
+	}
+
 
 	func createTodo(title: String, content: String, completionHandler: @escaping (Todo?) -> Void)
 	{
@@ -88,6 +105,7 @@ protocol TodosStoreProtocol
 	// MARK: CRUD operations - Inner closure
 
 	func fetchTodos(completionHandler: @escaping (() throws -> [Todo]) -> Void)
+	func fetchTodo(id: Int, completionHandler: @escaping (() throws -> Todo?) -> Void)
 	func createTodo(title: String, content: String, completionHandler: @escaping (() throws -> Todo?) -> Void)
 	func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void)
 }
