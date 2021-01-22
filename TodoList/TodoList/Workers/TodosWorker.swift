@@ -51,16 +51,15 @@ class TodosWorker
 		}
 	}
 
-	func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (Int, Todo?) -> Void)
+    func checkTodo(todoIdToCheck: Int, todoRowToCheck: Int, completionHandler: @escaping (Int, Todo?) -> Void)
 	{
-
 		todosStore.checkTodo(todoIdToCheck: todoIdToCheck) {
-			(id: () throws -> Int, todo: Todo?) -> Void in
+			(row: () throws -> Int, todo: Todo?) -> Void in
 
 			do {
-				let id = try id()
+				let row = try row()
 				DispatchQueue.main.async {
-					completionHandler(id, todo)
+					completionHandler(row, todo)
 				}
 			} catch {
 				DispatchQueue.main.async {

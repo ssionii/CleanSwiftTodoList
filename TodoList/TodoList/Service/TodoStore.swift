@@ -21,8 +21,7 @@ class TodoStore: TodosStoreProtocol {
 	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void) {
 
 		let todo = todoToCreate
-		CoreDataManager.shared.saveTodo(id: 0, content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
-			print("saved =\(onSuccess)")
+        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
 		}
 
 		completionHandler(todo, nil)
@@ -40,37 +39,40 @@ class TodoStore: TodosStoreProtocol {
 	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler) {
 
 		let todo = todoToCreate
-		CoreDataManager.shared.saveTodo(id: 0, content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
-			print("saved 2 =\(onSuccess)")
-		}
+        
+        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){
+            onSuccess in
+            print("saved =\(onSuccess)")
+        }
+        
+        completionHandler(TodosStoreResult.Success(result: todo))
 
-		completionHandler(TodosStoreResult.Success(result: todo))
 	}
 
 
 	// MARK: - CRUD operations - Inner closure
 
 	func fetchTodos(completionHandler: @escaping (() throws -> [Todo]) -> Void) {
-		let todos = CoreDataManager.shared.getTodos()
+		let todos = CoreDataManager.shared.getTodos(ascending: true)
 		completionHandler { return todos }
 	}
 
 	func createTodo(todoToCreate: Todo, completionHandler: @escaping (() throws -> Todo?) -> Void) {
 
 		let todo = todoToCreate
-		CoreDataManager.shared.saveTodo(id: 0, content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
-			print("saved 3 =\(onSuccess)")
+        CoreDataManager.shared.saveTodo(content: todoToCreate.content, isDone: todoToCreate.isDone, creationDate: todoToCreate.creationDate){ onSuccess in
+			print("saved =\(onSuccess)")
 		}
 
 		completionHandler { return todo }
 	}
-
-	func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void) {
-
-		CoreDataManager.shared.checkTodo(id: Int64(todoIdToCheck)) { onSuccess in
-			print("update =\(onSuccess)")
-
-		}
-	}
+    
+    func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void) {
+        
+        CoreDataManager.shared.checkTodo(id: Int64(todoIdToCheck)){
+            onSuccess in
+            print("update =\(onSuccess)")
+        }
+    }
 	
 }

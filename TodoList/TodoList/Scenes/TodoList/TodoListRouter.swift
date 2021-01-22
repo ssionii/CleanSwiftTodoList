@@ -19,7 +19,7 @@ import UIKit
 
 protocol TodoListDataPassing
 {
-  var dataStore: TodoListDataStore? { get }
+  var dataStore: TodoListDataStore? { get set }
 }
 
 class TodoListRouter: NSObject, TodoListRoutingLogic, TodoListDataPassing

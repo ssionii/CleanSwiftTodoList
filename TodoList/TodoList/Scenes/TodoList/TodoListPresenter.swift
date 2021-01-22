@@ -39,7 +39,7 @@ class TodoListPresenter: TodoListPresentationLogic
 
 	for todo in response.todos {
 		let date = dateFormatter.string(from: todo.creationDate)
-		let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: todo.id, content: todo.content, isDone: todo.isDone, creationDate: date)
+        let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: todo.id ,content: todo.content, isDone: todo.isDone, creationDate: date)
 		displayedTodos.append(displayedTodo)
 	}
 
@@ -49,7 +49,7 @@ class TodoListPresenter: TodoListPresentationLogic
 
 	func updateTodo(response: TodoList.CheckTodo.Response)
 	{
-		let viewModel = TodoList.CheckTodo.ViewModel(index: response.id, isDone: response.todo.isDone)
+		let viewModel = TodoList.CheckTodo.ViewModel(row: response.row, todo: response.todo)
 		viewController?.displayUpdatedTodoList(viewModel: viewModel)
 	}
 

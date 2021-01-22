@@ -29,7 +29,7 @@
 			{
 				struct DisplayedTodo
 				{
-					var id: Int
+                    var id: Int
 					var content: String
 					var isDone: Bool
 					var creationDate : String
@@ -42,17 +42,18 @@
 		enum CheckTodo {
 			struct Request
 			{
-				var id: Int
+                var id: Int
+                var row: Int
 			}
 			struct Response
 			{
-				var id: Int
+				var row: Int
 				var todo: Todo
 			}
 			struct ViewModel
 			{
-				var index: Int
-				var isDone: Bool
+				var row: Int
+				var todo: Todo
 
 			}
 
