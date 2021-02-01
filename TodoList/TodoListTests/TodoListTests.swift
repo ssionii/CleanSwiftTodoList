@@ -2,11 +2,10 @@
 //  TodoListTests.swift
 //  TodoListTests
 //
-//  Created by 60058232 on 2021/01/19.
+//  Created by 60058232 on 2021/02/01.
 //
 
 import XCTest
-@testable import TodoList
 
 class TodoListTests: XCTestCase {
 
