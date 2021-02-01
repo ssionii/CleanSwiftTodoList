@@ -44,7 +44,6 @@ class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 		}
 	}
 
-
 	func checkTodo(request: TodoList.CheckTodo.Request)
 	{
 		todosWorker.checkTodo(todoIdToCheck: request.id, todoRowToCheck: request.row) { (row, todo) -> Void in

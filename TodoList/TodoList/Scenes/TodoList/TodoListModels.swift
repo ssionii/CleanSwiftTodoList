@@ -32,7 +32,6 @@
                     var id: Int
 					var title: String
 					var isDone: Bool
-					var creationDate : String
 				}
 
 				var displayedTodos: [DisplayedTodo]
@@ -54,9 +53,7 @@
 			{
 				var row: Int
 				var todo: Todo
-
 			}
-
 		}
 
 		enum FetchTodayDate {

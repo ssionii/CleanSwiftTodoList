@@ -23,14 +23,6 @@ class TodoListPresenter: TodoListPresentationLogic
 {
 	weak var viewController: TodoListDisplayLogic?
 
-	let dateFormatter : DateFormatter = {
-
-		let dateFormatter = DateFormatter()
-		dateFormatter.locale = Locale(identifier: "ko_KR")
-		dateFormatter.dateFormat = "YYYY/M/d h:mm"
-		return dateFormatter
-	}()
-
 	let todayDateFormatter : DateFormatter = {
 
 		let dateFormatter = DateFormatter()
@@ -46,9 +38,7 @@ class TodoListPresenter: TodoListPresentationLogic
 		var displayedTodos : [TodoList.FetchTodos.ViewModel.DisplayedTodo] = []
 
 		for todo in response.todos {
-			let date = dateFormatter.string(from: todo.creationDate!)
-
-			let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: Int(todo.id), title: todo.title ?? "제목이 없습니다.", isDone: todo.isDone, creationDate: date)
+			let displayedTodo = TodoList.FetchTodos.ViewModel.DisplayedTodo(id: Int(todo.id), title: todo.title ?? "제목이 없습니다.", isDone: todo.isDone)
 
 			displayedTodos.append(displayedTodo)
 		}

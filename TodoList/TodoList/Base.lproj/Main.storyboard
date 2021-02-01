@@ -27,15 +27,15 @@
                                 <rect key="frame" x="0.0" y="142" width="414" height="720"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoListTableViewCell" id="8IX-ST-qA4" customClass="TodoListTableViewCell" customModule="TodoList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="TodoListTableViewCell" id="8IX-ST-qA4" customClass="TodoListTableViewCell" customModule="TodoList" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8IX-ST-qA4" id="hgR-fz-FN3">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" restorationIdentifier="TodoTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="eiy-ah-OLa">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="48"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jU-3V-yrJ">
                                                             <rect key="frame" x="16" y="12" width="24" height="24"/>
@@ -87,6 +87,7 @@
                                         <connections>
                                             <outlet property="checkButton" destination="cVZ-m3-rSo" id="hd1-je-zBL"/>
                                             <outlet property="contentLabel" destination="bp4-tR-YdP" id="KBY-yA-i1k"/>
+                                            <segue destination="fh5-XH-Q8s" kind="push" identifier="TodoDetail" id="mpu-f8-qxv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -107,7 +108,7 @@
                     <navigationItem key="navigationItem" title="Todo" id="Z9P-dg-GTd">
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="5cA-iN-ksF">
                             <connections>
-                                <segue destination="dAJ-kO-e5i" kind="push" id="Gb1-UN-FTi"/>
+                                <segue destination="dAJ-kO-e5i" kind="push" identifier="routeToCreateTodo" id="Gb1-UN-FTi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -129,14 +130,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u40-E7-mjd">
-                                <rect key="frame" x="20" y="310" width="374" height="1"/>
+                                <rect key="frame" x="20" y="354" width="374" height="1"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="kb3-vO-nCV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ig3-IH-Exr">
-                                <rect key="frame" x="20" y="124.5" width="374" height="85.5"/>
+                                <rect key="frame" x="20" y="168.5" width="374" height="85.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="투두 내용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSa-Jt-Lgb">
                                         <rect key="frame" x="0.0" y="18" width="374" height="17"/>
@@ -163,7 +164,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IKa-rd-c3a">
-                                <rect key="frame" x="20" y="64" width="374" height="48.5"/>
+                                <rect key="frame" x="20" y="108" width="374" height="48.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="투두 제목" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLt-nK-Dop">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="17"/>
@@ -190,7 +191,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IS9-8y-YXZ">
-                                <rect key="frame" x="20" y="321" width="374" height="37"/>
+                                <rect key="frame" x="20" y="365" width="374" height="37"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="생성 날짜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMy-wF-RUQ">
                                         <rect key="frame" x="0.0" y="10" width="52.5" height="17"/>

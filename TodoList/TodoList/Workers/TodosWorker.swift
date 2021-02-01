@@ -92,40 +92,8 @@ class TodosWorker
 
 protocol TodosStoreProtocol
 {
-//	// MARK: CRUD operations - Optional error
-//
-//	func fetchTodos(completionHandler: @escaping ([Todo], TodosStoreError?) -> Void)
-//	func createTodo(todoToCreate: Todo, completionHandler: @escaping (Todo?, TodosStoreError?) -> Void)
-//
-//	// MARK: CRUD operations - Generic enum result type
-//
-//	func fetchTodos(completionHandler: @escaping TodosStoreFetchTodosCompletionHandler)
-//	func createTodo(todoToCreate: Todo, completionHandler: @escaping TodosStoreCreateTodoCompletionHandler)
-
-	// MARK: CRUD operations - Inner closure
-
 	func fetchTodos(completionHandler: @escaping (() throws -> [Todo]) -> Void)
 	func fetchTodo(id: Int, completionHandler: @escaping (() throws -> Todo?) -> Void)
 	func createTodo(title: String, content: String, completionHandler: @escaping (() throws -> Todo?) -> Void)
 	func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void)
-}
-
-
-// MARK: - Todos store CRUD operation results
-
-typealias TodosStoreFetchTodosCompletionHandler = (TodosStoreResult<[Todo]>) -> Void
-typealias TodosStoreCreateTodoCompletionHandler = (TodosStoreResult<Todo>) -> Void
-
-enum TodosStoreResult<U>
-{
-	case Success(result: U)
-	case Failure(error: TodosStoreError)
-}
-
-// MARK: - Orders store CRUD operation errors
-
-enum TodosStoreError: Equatable, Error
-{
-	case CannotFetch(String)
-	case CannotCreate(String)
 }

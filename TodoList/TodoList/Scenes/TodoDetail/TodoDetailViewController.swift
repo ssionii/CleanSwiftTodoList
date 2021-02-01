@@ -81,14 +81,12 @@ class TodoDetailViewController: UIViewController, TodoDetailDisplayLogic
 
 	func fetchTodo()
 	{
-
 		let request = TodoDetail.FetchTodo.Request()
 		interactor?.fetchTodo(request: request)
 	}
 
 	func displayTodo(viewModel: TodoDetail.FetchTodo.ViewModel)
 	{
-		print("hello")
 		titleLabel.text = viewModel.title
 		contentLabel.text = viewModel.content
 		dateLabel.text = viewModel.creationDate
