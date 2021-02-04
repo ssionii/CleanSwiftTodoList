@@ -27,7 +27,7 @@ class TodoDetailInteractor: TodoDetailBusinessLogic, TodoDetailDataStore
 {
 
 	var presenter: TodoDetailPresentationLogic?
-	var todosWorker = TodosWorker(todosStore: TodoStore())
+	var todoWorker = TodoWorker(todosStore: TodoStore())
 
 	var id: Int?
 	var todo: Todo?
@@ -37,7 +37,7 @@ class TodoDetailInteractor: TodoDetailBusinessLogic, TodoDetailDataStore
 	{
 
 		if id != nil {
-			todosWorker.fetchTodo(id: id!) { (todo) -> Void in
+			todoWorker.fetchTodo(id: id!) { (todo) -> Void in
 				self.todo = todo!
 
 				let response = TodoDetail.FetchTodo.Response(todo: todo!)

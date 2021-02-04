@@ -19,15 +19,12 @@ protocol CreateTodoBusinessLogic
 
 protocol CreateTodoDataStore
 {
-	var todo: Todo? { get set }
 }
 
 class CreateTodoInteractor: CreateTodoBusinessLogic, CreateTodoDataStore
 {
 	var presenter: CreateTodoPresentationLogic?
-	var todosWorker = TodosWorker(todosStore: TodoStore())
-
-	var todo: Todo?
+	var todosWorker = TodoWorker(todosStore: TodoStore())
 
 	// MARK: Create todo
 
@@ -36,10 +33,9 @@ class CreateTodoInteractor: CreateTodoBusinessLogic, CreateTodoDataStore
 		let title = request.todoField.title
 		let content = request.todoField.content
 
-		todosWorker.createTodo(title: title, content: content) { (todo: Todo?) in
-			self.todo = todo
+		todosWorker.createTodo(title: title, content: content) { (isSuccess: Bool?) in
 
-			let response = CreateTodo.CreateTodo.Response(todo: todo)
+			let response = CreateTodo.CreateTodo.Response(isSuccess: isSuccess)
 			self.presenter?.presentCreateTodo(response: response)
 
 		}

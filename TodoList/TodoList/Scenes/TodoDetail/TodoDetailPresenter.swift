@@ -32,7 +32,7 @@ class TodoDetailPresenter: TodoDetailPresentationLogic
   
   func presentTodo(response: TodoDetail.FetchTodo.Response)
   {
-	let date = dateFormatter.string(from: response.todo.creationDate!)
+	let date = dateFormatter.string(from: response.todo.creationDate)
 
 	let viewModel = TodoDetail.FetchTodo.ViewModel(title: response.todo.title ?? "", content: response.todo.content ?? "", creationDate: date)
     viewController?.displayTodo(viewModel: viewModel)

@@ -14,7 +14,7 @@ class CoreDataManager {
 	let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
 	lazy var context = appDelegate?.persistentContainer.viewContext
 
-	let modelName: String = "Todo"
+	let modelName: String = "Todos"
 
 	func fetchTodos(ascending: Bool = false) -> [Todo] {
 		var models: [Todo] = [Todo]()
@@ -26,8 +26,12 @@ class CoreDataManager {
 			fetchRequest.sortDescriptors = [idSort]
 
 			do {
-				if let fetchResult: [Todo] = try context.fetch(fetchRequest) as? [Todo] {
-					models = fetchResult
+				if let fetchResult: [Todos] = try context.fetch(fetchRequest) as? [Todos] {
+					for item in fetchResult {
+						let todo = Todo(id: Int(item.id), title: item.title, content: item.content , creationDate: item.creationDate!, isDone: item.isDone)
+						models.append(todo)
+					}
+
 				}
 			} catch let error as NSError {
 				print("Could not fetch🥺: \(error), \(error.userInfo)")
@@ -45,9 +49,10 @@ class CoreDataManager {
 		let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
 
 		do {
-			if let results: [Todo] = try context?.fetch(fetchRequest) as? [Todo] {
+			if let results: [Todos] = try context?.fetch(fetchRequest) as? [Todos] {
 				if results.count != 0 {
-					todo = results[0]
+					let result = results[0]
+					todo = Todo(id: Int(result.id), title: result.title, content: result.content, creationDate: result.creationDate!, isDone: result.isDone)
 				}
 			}
 
@@ -64,7 +69,7 @@ class CoreDataManager {
 	}
 
 	func saveTodo(title: String, content: String,
-				  isDone: Bool, creationDate: Date, onSuccess: @escaping ((Todo, Bool) -> Void)) {
+				  isDone: Bool, creationDate: Date, onSuccess: @escaping ((Bool) -> Void)) {
         
         
 		if let context = context,
@@ -76,7 +81,7 @@ class CoreDataManager {
             let fetchRequest: NSFetchRequest<NSManagedObject>
                 = NSFetchRequest<NSManagedObject>(entityName: modelName)
             do {
-                if let fetchResult: [Todo] = try context.fetch(fetchRequest) as? [Todo] {
+                if let fetchResult: [Todos] = try context.fetch(fetchRequest) as? [Todos] {
 
 					if fetchResult.count != 0 {
 						lastId = Int(fetchResult[fetchResult.count-1].id)
@@ -90,15 +95,16 @@ class CoreDataManager {
             
             
             
-			if let todo: Todo = NSManagedObject(entity: entity, insertInto: context) as? Todo {
-                todo.id = Int64(lastId + 1)
+			if let todo: Todos = NSManagedObject(entity: entity, insertInto: context) as? Todos {
+                todo.id = Int32(lastId + 1)
 				todo.title = title
 				todo.content = content
 				todo.isDone = isDone
 				todo.creationDate = creationDate
 
 				contextSave { success in
-					onSuccess(todo, success)
+				
+					onSuccess(success)
 				}
 			}
 		}
@@ -110,7 +116,7 @@ class CoreDataManager {
 		let fetchRequest: NSFetchRequest<NSFetchRequestResult> = filteredRequest(id: id)
 
 		do {
-			if let results: [Todo] = try context?.fetch(fetchRequest) as? [Todo] {
+			if let results: [Todos] = try context?.fetch(fetchRequest) as? [Todos] {
 				if results.count != 0 {
 					let objectUpdate = results[0] as NSManagedObject
 					objectUpdate.setValue(!results[0].isDone, forKey: "isDone")

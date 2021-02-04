@@ -96,11 +96,19 @@ class CreateTodoViewController: UIViewController, CreateTodoDisplayLogic, UIText
 
 	func displayCreateTodo(viewModel: CreateTodo.CreateTodo.ViewModel)
 	{
-		if viewModel.todo != nil {
+
+
+		print(viewModel.isSuccess)
+		guard let isSuccess = viewModel.isSuccess else {
+			showTodoFailureAlert(title: "투두 등록 실패", message: "투두를 다시 등록해주세요.")
+			return
+		}
+		if isSuccess {
 			router?.routeToTodoList(segue: nil)
 		} else {
 			showTodoFailureAlert(title: "투두 등록 실패", message: "투두를 다시 등록해주세요.")
 		}
+
 	}
 
 	// MARK: Make place holder

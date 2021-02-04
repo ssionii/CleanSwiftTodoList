@@ -28,7 +28,7 @@ class TodoListInteractor: TodoListBusinessLogic, TodoListDataStore
 {
 
 	var presenter: TodoListPresentationLogic?
-	var todosWorker = TodosWorker(todosStore: TodoStore())
+	var todosWorker = TodoWorker(todosStore: TodoStore())
 	var dateWorker = DateWorker(dateStore: DateStore())
 
 	var todos: [Todo]?

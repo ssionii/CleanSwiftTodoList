@@ -57,8 +57,8 @@ class CreateTodoRouter: NSObject, CreateTodoRoutingLogic, CreateTodoDataPassing
 
 	func passDataToTodoList(source: CreateTodoDataStore, destination: inout TodoListDataStore)
 	{
-        if source.todo != nil && destination.todos != nil {
-            destination.todos!.append(source.todo!)
-		}
+//        if source.todo != nil && destination.todos != nil {
+//            destination.todos!.append(source.todo!)
+//		}
 	}
 }

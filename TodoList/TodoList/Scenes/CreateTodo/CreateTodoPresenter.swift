@@ -26,7 +26,7 @@ class CreateTodoPresenter: CreateTodoPresentationLogic
 
 	func presentCreateTodo(response: CreateTodo.CreateTodo.Response)
 	{
-		let viewModel = CreateTodo.CreateTodo.ViewModel(todo: response.todo)
+		let viewModel = CreateTodo.CreateTodo.ViewModel(isSuccess: response.isSuccess)
 		viewController?.displayCreateTodo(viewModel: viewModel)
 	}
 }

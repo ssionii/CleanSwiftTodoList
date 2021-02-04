@@ -29,11 +29,11 @@ enum CreateTodo
 		}
 		struct Response
 		{
-			var todo: Todo?
+			var isSuccess: Bool?
 		}
 		struct ViewModel
 		{
-			var todo: Todo?
+			var isSuccess: Bool?
 		}
 	}
 }

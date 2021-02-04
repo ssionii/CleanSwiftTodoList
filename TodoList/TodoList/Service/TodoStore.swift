@@ -64,17 +64,13 @@ class TodoStore: TodosStoreProtocol {
 	}
 
 
-	func createTodo(title: String, content: String , completionHandler: @escaping (() throws -> Todo?) -> Void) {
+	func createTodo(title: String, content: String , completionHandler: @escaping (() throws -> Bool?) -> Void) {
 
-		var todoResult: Todo = Todo()
-		CoreDataManager.shared.saveTodo(title: title, content: content, isDone: false, creationDate: Date()){ todo, onSuccess in
-
-			todoResult = todo
+		CoreDataManager.shared.saveTodo(title: title, content: content, isDone: false, creationDate: Date()){ onSuccess in
 
 			print("saved =\(onSuccess)")
+			completionHandler { return onSuccess }
 		}
-
-		completionHandler { return todoResult }
 	}
     
     func checkTodo(todoIdToCheck: Int, completionHandler: @escaping (() throws -> Int, Todo?) -> Void) {

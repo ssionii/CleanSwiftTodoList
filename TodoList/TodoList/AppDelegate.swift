@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	// MARK: - CoreData
 	lazy var persistentContainer : NSPersistentContainer = {
-		let container = NSPersistentContainer(name: "Todo")
+		let container = NSPersistentContainer(name: "TodoList")
 		container.loadPersistentStores(completionHandler:{ (storeDescription, error) in
 			if let error = error {
 				print("error")
